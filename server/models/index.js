@@ -15,13 +15,21 @@ db.con.connect();
 module.exports = {
   messages: {
     get: function (callback) {
-      db.con.query('SELECT * FROM user',function(err, rows) {
-        if (err) throw err;
+      db.con.query('SELECT * FROM message', function(err, rows) {
+        if (err) {
+          throw err;
+        }
 
         rows = rows.map(function(row) {
           return JSON.parse(JSON.stringify(row));
         });
-        console.log(rows)
+
+        rows = rows.map(function(msg) {
+          return {
+            username: msg.userId, text: msg.msg, roomname: msg.roomId
+          };
+        });
+        console.log(rows);
         callback(rows);
       });
 
