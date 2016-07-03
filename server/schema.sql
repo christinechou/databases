@@ -25,7 +25,8 @@ CREATE TABLE message (
   userId int NOT NULL,
   roomId int NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (userId) REFERENCES user (id)
+  FOREIGN KEY (userId) REFERENCES user (id),  
+  FOREIGN KEY (roomId) REFERENCES room (id)
 );
 
 
@@ -35,3 +36,12 @@ CREATE TABLE user_room (
   FOREIGN KEY (userId) REFERENCES user (id),
   FOREIGN KEY (roomId) REFERENCES room (id)
 );
+
+INSERT INTO user (name)
+  VALUES ('christine');
+INSERT INTO room (name)
+  VALUES ('lobby');
+INSERT INTO message (msg, userId, roomId)
+  VALUES ('tgis!', SELECT(id FROM user WHERE name='christine'), SELECT(id FROM room WHERE name='lobby'));
+INSERT INTO user_room (userId, roomId)
+  VALUES (SELECT(id FROM user WHERE name='christine'), SELECT(id FROM room WHERE name='lobby'));
