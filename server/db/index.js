@@ -6,9 +6,15 @@ var mysql = require('mysql');
 
 //Uses npm module to connect to the database server running on your computer
 
-module.exports.con = mysql.createConnection({
+var con = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'md',
+  password : '',
   database : 'chat'
 });
+
+con.connect();
+
+module.exports = {
+  con: con
+}
